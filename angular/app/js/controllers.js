@@ -74,6 +74,18 @@ angular.module('myApp.controllers', [])
     });
   }])
 
+  .controller('NewsCtrl', ['$scope', '$http', 'cms', function($scope, $http, cms) {
+    $scope.posts = [];
+    $http.get(cms + '/api/1.0/news.json')
+      .success(function(data) {
+        if (data.posts && data.posts.length) {
+          for (var i = 0; i < data.posts.length; i++) {
+            $scope.posts.push(data.posts[i].post);
+          }
+        }
+      });
+  }])
+
     });
   }])
 

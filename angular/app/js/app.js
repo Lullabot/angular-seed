@@ -5,6 +5,7 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
   .config(function($routeProvider) {
     $routeProvider
       .when('/404', {templateUrl: '/_partials/404.html', controller: '404Ctrl', caseInsensitiveMatch: true})
+      .when('/news', {templateUrl: '/_partials/pages/news.html', controller: 'NewsCtrl', caseInsensitiveMatch: true})
       .otherwise({templateUrl: '/_partials/page.html', controller: 'PageCtrl'})
     ;
   })
