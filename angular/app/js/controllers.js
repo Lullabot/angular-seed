@@ -74,16 +74,15 @@ angular.module('myApp.controllers', [])
     });
   }])
 
-  .controller('NewsCtrl', ['$scope', '$http', 'cms', function($scope, $http, cms) {
+  .controller('NewsCtrl', ['$scope', '$http', 'cmsNews', function($scope, $http, cmsNews) {
     $scope.posts = [];
-    $http.get(cms + '/api/1.0/news.json')
-      .success(function(data) {
-        if (data.posts && data.posts.length) {
-          for (var i = 0; i < data.posts.length; i++) {
-            $scope.posts.push(data.posts[i].post);
-          }
+    var news = cmsNews.get({path: $scope.path}, function(data) {
+      if (data.posts && data.posts.length) {
+        for (var i = 0; i < data.posts.length; i++) {
+          $scope.posts.push(data.posts[i].post);
         }
-      });
+      }
+    });
   }])
 
     });

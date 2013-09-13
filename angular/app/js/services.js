@@ -67,4 +67,13 @@ angular.module('myApp.services', ['ngResource'])
       }
     };
   }])
+
+  .factory('cmsNews', ['cms', '$resource', function(cms, $resource) {
+    return $resource(cms + '/api/1.0/news.json', {}, {
+      get: {
+        method: 'GET',
+        cache: true
+      }
+    });
+  }])
 ;
