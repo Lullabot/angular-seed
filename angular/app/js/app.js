@@ -2,6 +2,13 @@
 
 angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 'myApp.controllers'])
 
+  .config(function($routeProvider) {
+    $routeProvider
+      .when('/404', {templateUrl: '/_partials/404.html', controller: '404Ctrl', caseInsensitiveMatch: true})
+      .otherwise({templateUrl: '/_partials/page.html', controller: 'PageCtrl'})
+    ;
+  })
+
   .run(function() {
     if (!Array.prototype.indexOf) {
       Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
