@@ -39,7 +39,8 @@ angular.module('myApp.controllers', [])
   .controller('PageCtrl', ['$scope', 'cmsNode', 'cmsSiteSettings', '$location', 'cmsTemplate', function($scope, cmsNode, cmsSiteSettings, $location, cmsTemplate) {
     $scope.node = {};
     $scope.front = false;
-    var node = cmsNode.get({path: 'node/1'}, function(data) {
+    $scope.path = $location.path().substr(1);
+    var node = cmsNode.get({path: $scope.path}, function(data) {
       if (data.nodes && data.nodes[0] && data.nodes[0].node) {
         $scope.node = data.nodes[0].node;
         var siteSettings = cmsSiteSettings.get({}, function (settings) {
