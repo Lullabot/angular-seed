@@ -68,7 +68,14 @@ angular.module('myApp.controllers', [])
           }
         });
       }
+      else {
+        $location.path('/404');
+      }
     });
-  }]);
+  }])
+
+    });
+  }])
+
 
 ;
