@@ -9,6 +9,10 @@ angular.module('myApp', ['myApp.filters', 'myApp.services', 'myApp.directives', 
     ;
   })
 
+  .config(function($locationProvider) {
+    $locationProvider.html5Mode(true);
+  })
+
   .run(function() {
     if (!Array.prototype.indexOf) {
       Array.prototype.indexOf = function (searchElement /*, fromIndex */ ) {
