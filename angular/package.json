@@ -1,6 +1,6 @@
 {
-  "name": "angualrjs-seed",
-  "description": "A starter project for angular js",
+  "name": "drupal-angualrjs-seed",
+  "description": "A starter project for Drupal and angular js",
   "devDependencies": {
         "phantomjs" : "*",
         "karma" : "*",
