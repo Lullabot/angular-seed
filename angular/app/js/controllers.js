@@ -4,7 +4,8 @@ angular.module('myApp.controllers', [])
   .controller('SiteCtrl', ['$scope', 'cmsSiteSettings', function($scope, cmsSiteSettings) {
     $scope.site = {
       templates: {
-        mainMenu: '/_partials/mainMenu.html'
+        mainMenu: '/_partials/mainMenu.html',
+        front: '/_partials/front.html'
       }
     };
     var siteSettings = cmsSiteSettings.get({}, function (settings) {
@@ -40,22 +41,32 @@ angular.module('myApp.controllers', [])
     $scope.node = {};
     $scope.front = false;
     $scope.path = $location.path().substr(1);
-    var node = cmsNode.get({path: $scope.path}, function(data) {
-      if (data.nodes && data.nodes[0] && data.nodes[0].node) {
-        $scope.node = data.nodes[0].node;
-        var siteSettings = cmsSiteSettings.get({}, function (settings) {
-          if (settings.variables) {
-            if (settings.variables.site_frontpage) {
-              if ($scope.node.path && $scope.node.path == settings.variables.site_frontpage || 'node/' + $scope.node.id == settings.variables.site_frontpage) {
-                $scope.front = true;
-              }
+
+    var siteSettings = cmsSiteSettings.get({}, function (settings) {
+
+      // Forward to the actual front page URL instead of just "/"
+      if ($scope.path.length <= 1 && settings.variables.site_frontpage && settings.variables.site_frontpage.length) {
+        $scope.path = '/'+ settings.variables.site_frontpage;
+        $location.path($scope.path);
+      }
+      else {
+        var node = cmsNode.get({path: $scope.path}, function(data) {
+          if (data.nodes && data.nodes[0] && data.nodes[0].node) {
+            $scope.node = data.nodes[0].node;
+
+            // See if this is the front page.
+            if (settings.variables.site_frontpage && ($scope.node.path && $scope.node.path == settings.variables.site_frontpage) || ('node/' + $scope.node.id == settings.variables.site_frontpage)) {
+              $scope.front = true;
             }
 
+            // See if this is an allowed content type.
             if ($scope.node.type && settings.variables.allowed_content_types && settings.variables.allowed_content_types.indexOf($scope.node.type) !== -1) {
+              // Redirect to an aliased path if it exists.
               if ($scope.path !== $scope.node.path) {
                 $location.path($scope.node.path).replace();
               }
 
+              // Discover the template for this content type.
               cmsTemplate.getPartial($scope.node).then(function(partialUrl) {
                 $scope.templateUrl = partialUrl;
               }, function () {
@@ -66,10 +77,10 @@ angular.module('myApp.controllers', [])
               $location.path('/404');
             }
           }
+          else {
+            $location.path('/404');
+          }
         });
-      }
-      else {
-        $location.path('/404');
       }
     });
   }])
