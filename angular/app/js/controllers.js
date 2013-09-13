@@ -85,6 +85,17 @@ angular.module('myApp.controllers', [])
     });
   }])
 
+  .controller('ToutCtrl', ['$scope', '$http', 'cmsSiteSettings', 'cmsTout', '$element', function($scope, $http, cmsSiteSettings, cmsTout, $element) {
+    $scope.tout = {};
+    var siteSettings = cmsSiteSettings.get({}, function (settings) {
+      var tout = $element.attr('data-tout');
+      if (settings.variables && settings.variables.touts && settings.variables.touts[tout]) {
+        var tout = cmsTout.get({id: settings.variables.touts[tout]}, function(data) {
+          if (data.touts && data.touts[0] && data.touts[0].tout) {
+            $scope.tout = data.touts[0].tout;
+          }
+        });
+      }
     });
   }])
 

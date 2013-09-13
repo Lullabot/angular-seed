@@ -1,3 +1,7 @@
+<div data-ng-controller="ToutCtrl" data-tout="homepage_jumbotron">
+  <div ng-bind-html-unsafe="tout.body"></div>
+</div>
+
 <h1>News</h1>
 <div data-ng-repeat="post in posts">
   <a data-ng-href="{{post.path}}">

@@ -76,4 +76,15 @@ angular.module('myApp.services', ['ngResource'])
       }
     });
   }])
+
+  .factory('cmsTout', ['cms', '$resource', function(cms, $resource) {
+    return $resource(cms + '/api/1.0/touts.json', {
+      id: '@id'
+    }, {
+      get: {
+        method: 'GET',
+        cache: true
+      }
+    });
+  }])
 ;
