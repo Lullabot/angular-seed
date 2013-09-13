@@ -90,6 +90,11 @@ angular.module('myApp.controllers', [])
     var news = cmsNews.get({path: $scope.path}, function(data) {
       if (data.posts && data.posts.length) {
         for (var i = 0; i < data.posts.length; i++) {
+          var post = data.posts[i].post;
+          if (post.created) {
+            var date = new Date(post.created * 1000);
+            post.createdFormatted = date.getDay() + '-' + date.getMonth() + '-' + date.getYear() + ' ' + date.getHours() + ':' + date.getMinutes() + ':' + date.getSeconds;
+          }
           $scope.posts.push(data.posts[i].post);
         }
       }
