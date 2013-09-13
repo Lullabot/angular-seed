@@ -77,5 +77,7 @@ angular.module('myApp.controllers', [])
     });
   }])
 
+  .controller('404Ctrl', ['$scope', function($scope) {
+  }])
 
 ;
