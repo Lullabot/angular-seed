@@ -22,3 +22,8 @@ FUN THINGS TO TRY
   * Override template files for different content types (see angular/app/_partials/nodes/README.md)
   * Turn on the Drupal path module and add aliases to nodes
   * Create your own listing of content (see drupal_angular_seed_news.module)
+
+NOTES
+-----
+
+The seed modules are not intended to be used as-is on your site. You can use https://drupal.org/project/ftools to put the features back into your database and then re-export from there.
