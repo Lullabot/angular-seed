@@ -7,12 +7,23 @@ INSTALLATION
 ------------
 
 Drupal:
-  1. Download the dependencies for, and enable, the drupal_angular_seed_* features modules. It's recommended you add these to a Drupal site install with the minimal profile.
-  2. Visit admin/structure/features and make sure the features are all reverted
+
+  1. Download the [Drupal Boilerplate](https://github.com/Lullabot/drupal-boilerplate). And download the latest Drupal release inside the _docroot_ folder.
+  2. Set up a virtual host for `http://bck.example.org` (use your real hostname), and point it to `<path-to-boilerplate>/docroot`.
+  3. Install Drupal normally by going to `http://bck.example.org/install.php`. Install the minimal profile.
+  4. Download the **drupal-angular-seed** project inside the boilerplate.
+  5. Set an alias for the modules in the boilerplate to the _default_ site.
+  ```bash
+  cd docroot/sites/default;
+  ln -s ../../drupal-angular-seed/drupal modules;
+  ```
+  6. Download the dependencies for, and enable, the drupal\_angular\_seed\_* features modules. `drush en -y drupal_angular_seed_main drupal_angular_seed_news drupal_angular_seed_page drupal_angular_seed_tout`.
+  7. Visit admin/structure/features and make sure the features are all reverted. `drush -y fra`.
 
 AngularJS:
+
   1. Change the URL in angular/app/js/services.js to point to your Drupal install.
-  2. Point your webserver to angular/app
+  2. Set up a virtual host for `http://frnt.example.org` (use your real hostname), and point it to `<path-to-boilerplate>/drupal-angular-seed/angular/app`.
 
 FUN THINGS TO TRY
 -----------------
