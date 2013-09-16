@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('myApp.services', ['ngResource', 'LocalStorageModule'])
+angular.module('myApp.services', ['ngResource', 'LocalStorageCacheModule'])
 
   .value('cms', 'http://local.angular-drupal.backend')
 
@@ -36,34 +36,34 @@ angular.module('myApp.services', ['ngResource', 'LocalStorageModule'])
     );
   }])
 
-  .factory('cmsTemplate', ['$http', '$templateCache', 'localStorageService', '$q', '$timeout', function($http, $templateCache, localStorageService, $q, $timeout) {
+  .factory('cmsTemplate', ['$http', '$templateCache', 'localStorageCacheService', '$q', '$timeout', function($http, $templateCache, localStorageCacheService, $q, $timeout) {
     return {
       getPartial: function(node) {
         var currentPath = 'node/' + node.id;
         var deferred = $q.defer();
         $timeout(function() {
-          var templateUrl = localStorageService.get('myApp.templateUri.node.' + currentPath) || '/_partials/nodes/' + node.type + '.html';
+          var templateUrl = localStorageCacheService.get('myApp.templateUri.node.' + currentPath) || '/_partials/nodes/' + node.type + '.html';
           $http.get(templateUrl, {
             cache: $templateCache
           })
             .success(function(data) {
-              localStorageService.add('myApp.templateUri.node.' + currentPath, templateUrl);
+              localStorageCacheService.add('myApp.templateUri.node.' + currentPath, templateUrl);
               $templateCache.put(templateUrl, data);
               deferred.resolve(templateUrl);
             })
             .error(function(data) {
               var genericTemplateUrl = '/_partials/nodes/node.html';
-              localStorageService.remove('myApp.templateUri.node.' + currentPath);
+              localStorageCacheService.remove('myApp.templateUri.node.' + currentPath);
               $http.get(genericTemplateUrl, {
                 cache: $templateCache
               })
                 .success(function(data) {
-                  localStorageService.add('myApp.templateUri.node.' + currentPath, genericTemplateUrl);
+                  localStorageCacheService.add('myApp.templateUri.node.' + currentPath, genericTemplateUrl);
                   $templateCache.put(templateUrl, data);
                   deferred.resolve(templateUrl);
                 })
                 .error(function(data){
-                  localStorageService.remove('myApp.templateUri.node.' + currentPath);
+                  localStorageCacheService.remove('myApp.templateUri.node.' + currentPath);
                   deferred.reject();
                 });
           });
